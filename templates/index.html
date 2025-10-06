@@ -8,25 +8,30 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts (Inter) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <style>
         /* Custom styles */
         body {
             font-family: 'Inter', sans-serif;
             color: #333;
+            padding-bottom: 64px; /* Space for mobile bottom nav */
+            md:padding-bottom: 0;
         }
         .font-lora {
             font-family: 'Lora', serif;
+        }
+        .font-poppins {
+            font-family: 'Poppins', sans-serif;
         }
         /* Reveal on scroll animation classes */
         .reveal {
@@ -62,53 +67,39 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .hero-section {
+            min-height: 85vh; /* Adjusted for desktop */
+            background: #111;
+            position: relative;
+            overflow: hidden;
+            /* For smooth disappearing effect */
+            will-change: opacity;
+            transition: opacity 0.3s linear;
+        }
         
-        /* Bootstrap Carousel Custom Styles */
-        #heroCarousel {
-            height: 80vh;
-        }
-        .carousel-item {
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-        }
-        .carousel-caption-custom {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            background: rgba(0,0,0,0.6);
-            padding: 1rem;
-        }
-        .carousel-indicators [data-bs-target] {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-        .carousel-indicators .active {
-            background-color: #e62727;
+        #stone-container canvas {
+            width: 100% !important;
+            height: 100% !important;
         }
 
+        @media (max-width: 768px) {
+            .hero-section {
+                min-height: 60vh; /* Specific mobile height */
+            }
+        }
     </style>
 </head>
-<body class="bg-[#f3f2ec]">
+<body class="bg-[#f3f2ec] pb-16 md:pb-0">
 
     <!-- Modern Dock Navigation (Desktop)  -->
-    <!-- Do not change This part -->
     <div class="hidden md:flex justify-center fixed top-4 w-full z-50">
         <nav id="desktop-nav" class="flex items-center space-x-4 bg-white/70 backdrop-blur-md shadow-lg rounded-full px-6 py-2">
-            <a href="#" class="text-xl font-bold font-lora text-[#1e93ab] px-4">StoneCraft</a>
+            <a href="index.html" class="text-xl font-bold font-lora text-[#1e93ab] px-4">StoneCraft</a>
             <div class="h-6 w-px bg-gray-300"></div>
             <div class="flex items-center space-x-1">
-                <a href="#" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Home</a>
-                <a href="#" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Products</a>
+                <a href="index.html" class="font-semibold text-[#1e93ab] bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Home</a>
+                <a href="products.html" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Products</a>
                 <a href="#" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">About Us</a>
                 <a href="#" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Portfolio</a>
                 <a href="#" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Contact</a>
@@ -118,15 +109,15 @@
     <!-- Header (Mobile) -->
     <header id="mobile-header" class="md:hidden bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold font-lora text-[#1e93ab]">StoneCraft</a>
+            <a href="index.html" class="text-2xl font-bold font-lora text-[#1e93ab]">StoneCraft</a>
             <button id="mobile-menu-button" class="md:hidden">
                 <i class="fas fa-bars text-2xl text-gray-700"></i>
             </button>
         </div>
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
-            <a href="#" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Home</a>
-            <a href="#" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Products</a>
+            <a href="index.html" class="block py-2 font-semibold text-[#1e93ab]">Home</a>
+            <a href="products.html" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Products</a>
             <a href="#" class="block py-2 text-gray-600 hover:text-[#1e93ab]">About Us</a>
             <a href="#" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Portfolio</a>
             <a href="#" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Contact</a>
@@ -135,54 +126,22 @@
     </header>
 
     <main>
-        <!-- Hero Section with Bootstrap Carousel -->
-        <section>
-            <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
-                <div class="carousel-inner h-100">
-                    <!-- Slide 1 -->
-                    <div class="carousel-item active h-100" style="background-image: url('https://placehold.co/1920x1080/666/fff?text=Stone+Carving');">
-                        <div class="carousel-caption-custom">
-                            <div class="container mx-auto px-6 text-center">
-                                <h1 class="text-4xl md:text-6xl font-bold font-lora mb-4">Masterpieces in Stone</h1>
-                                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">From timeless sculptures to elegant home decor, we bring enduring beauty to life.</p>
-                                <a href="#" class="bg-[#e62727] text-white py-3 px-8 rounded-md hover:bg-[#c41e1e] text-lg font-semibold transition duration-300 transform hover:scale-105">Explore Our Collection</a>
-                            </div>
+        <!-- New Hero Section -->
+        <section class="hero-section flex items-center">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
+                    <div class="flex-1 max-w-xl reveal">
+                        <h1 class="text-4xl md:text-5xl text-white font-poppins font-bold mb-4 leading-tight">Transform Raw Stone into Timeless Art</h1>
+                        <p class="text-lg md:text-xl text-gray-300 mb-8">Discover exquisite handcrafted stone masterpieces that blend tradition with modern elegance. Elevate your space with our bespoke designs.</p>
+                        <div class="flex justify-center md:justify-start gap-4">
+                            <a href="products.html" class="bg-[#e62727] text-white py-3 px-8 rounded-md hover:bg-[#c41e1e] text-lg font-semibold transition duration-300 transform hover:scale-105">Explore Collections</a>
+                            <a href="#" class="bg-transparent border-2 border-[#1e93ab] text-white py-3 px-8 rounded-md hover:bg-[#1e93ab] text-lg font-semibold transition duration-300 transform hover:scale-105">View Our Work</a>
                         </div>
                     </div>
-                    <!-- Slide 2 -->
-                    <div class="carousel-item h-100" style="background-image: url('https://placehold.co/1920x1080/a87c5b/fff?text=Fountains');">
-                        <div class="carousel-caption-custom">
-                            <div class="container mx-auto px-6 text-center">
-                               <h1 class="text-4xl md:text-6xl font-bold font-lora mb-4">Tranquil Fountains</h1>
-                               <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">Create your personal oasis with our beautifully sculpted stone fountains.</p>
-                               <a href="#" class="bg-[#e62727] text-white py-3 px-8 rounded-md hover:bg-[#c41e1e] text-lg font-semibold transition duration-300 transform hover:scale-105">View Fountains</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Slide 3 -->
-                    <div class="carousel-item h-100" style="background-image: url('https://placehold.co/1920x1080/8d8d8d/fff?text=Jali');">
-                        <div class="carousel-caption-custom">
-                            <div class="container mx-auto px-6 text-center">
-                               <h1 class="text-4xl md:text-6xl font-bold font-lora mb-4">Elegant Marble Jali</h1>
-                               <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">Intricate lattice work that adds a touch of royal heritage to any space.</p>
-                               <a href="#" class="bg-[#e62727] text-white py-3 px-8 rounded-md hover:bg-[#c41e1e] text-lg font-semibold transition duration-300 transform hover:scale-105">Discover Jali Designs</a>
-                            </div>
-                        </div>
+                    <div class="flex-1 hidden md:flex justify-center items-center reveal">
+                         <div id="stone-container" class="w-[300px] h-[300px]"></div>
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
         </section>
 
@@ -193,16 +152,16 @@
                     <h2 class="text-3xl md:text-4xl font-bold font-lora text-gray-800">Our Products</h2>
                     <p class="text-gray-600 mt-2 max-w-2xl mx-auto">Discover our wide range of handcrafted stone items, perfect for adding a touch of elegance to any space.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                     <!-- Category Card 1 -->
                     <div class="bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 transition-all duration-300 reveal">
                         <div class="overflow-hidden">
                             <img src="https://placehold.co/600x400/a87c5b/fff?text=Fountains" alt="Stone Fountains" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Stone Fountains</h3>
-                            <p class="text-gray-600 mb-4">Create a tranquil oasis with our beautifully sculpted stone fountains.</p>
-                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View More <i class="fas fa-arrow-right ml-1"></i></a>
+                        <div class="p-4 md:p-6">
+                            <h3 class="text-lg md:text-xl font-bold font-lora mb-2 text-gray-800">Stone Fountains</h3>
+                            <p class="hidden md:block text-gray-600 mb-4">Create a tranquil oasis with our beautifully sculpted stone fountains.</p>
+                            <a href="#" class="font-semibold text-sm md:text-base text-[#1e93ab] group-hover:text-[#156a7c]">View More <i class="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
                     <!-- Category Card 2 -->
@@ -210,10 +169,10 @@
                         <div class="overflow-hidden">
                             <img src="https://placehold.co/600x400/967d69/fff?text=Sculptures" alt="Garden Sculptures" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Garden Sculptures</h3>
-                            <p class="text-gray-600 mb-4">Enhance your garden's beauty with our unique, handcrafted statues.</p>
-                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View More <i class="fas fa-arrow-right ml-1"></i></a>
+                        <div class="p-4 md:p-6">
+                            <h3 class="text-lg md:text-xl font-bold font-lora mb-2 text-gray-800">Garden Sculptures</h3>
+                            <p class="hidden md:block text-gray-600 mb-4">Enhance your garden's beauty with our unique, handcrafted statues.</p>
+                            <a href="#" class="font-semibold text-sm md:text-base text-[#1e93ab] group-hover:text-[#156a7c]">View More <i class="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
                     <!-- Category Card 3 -->
@@ -221,10 +180,10 @@
                         <div class="overflow-hidden">
                             <img src="https://placehold.co/600x400/8d8d8d/fff?text=Jali" alt="Marble Jali" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Marble Jali</h3>
-                            <p class="text-gray-600 mb-4">Intricate and elegant marble lattice work for a touch of royal heritage.</p>
-                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View More <i class="fas fa-arrow-right ml-1"></i></a>
+                        <div class="p-4 md:p-6">
+                            <h3 class="text-lg md:text-xl font-bold font-lora mb-2 text-gray-800">Marble Jali</h3>
+                            <p class="hidden md:block text-gray-600 mb-4">Intricate and elegant marble lattice work for a touch of royal heritage.</p>
+                            <a href="#" class="font-semibold text-sm md:text-base text-[#1e93ab] group-hover:text-[#156a7c]">View More <i class="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
                     <!-- Category Card 4 -->
@@ -232,10 +191,10 @@
                         <div class="overflow-hidden">
                             <img src="https://placehold.co/600x400/bca490/fff?text=Planters" alt="Stone Planters" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Stone Planters</h3>
-                            <p class="text-gray-600 mb-4">Durable and stylish stone planters for your indoor and outdoor plants.</p>
-                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View More <i class="fas fa-arrow-right ml-1"></i></a>
+                        <div class="p-4 md:p-6">
+                            <h3 class="text-lg md:text-xl font-bold font-lora mb-2 text-gray-800">Stone Planters</h3>
+                            <p class="hidden md:block text-gray-600 mb-4">Durable and stylish stone planters for your indoor and outdoor plants.</p>
+                            <a href="#" class="font-semibold text-sm md:text-base text-[#1e93ab] group-hover:text-[#156a7c]">View More <i class="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
                 </div>
@@ -320,8 +279,8 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-200 hover:text-white">Home</a></li>
-                        <li><a href="#" class="text-gray-200 hover:text-white">Products</a></li>
+                        <li><a href="index.html" class="text-gray-200 hover:text-white">Home</a></li>
+                        <li><a href="products.html" class="text-gray-200 hover:text-white">Products</a></li>
                         <li><a href="#" class="text-gray-200 hover:text-white">About Us</a></li>
                         <li><a href="#" class="text-gray-200 hover:text-white">Contact</a></li>
                     </ul>
@@ -372,9 +331,29 @@
             </div>
         </div>
     </div>
+    
+    <!-- Mobile Bottom Navigation -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.1)] z-50">
+        <div class="flex justify-around">
+            <a href="index.html" class="flex flex-col items-center justify-center text-center p-2 text-[#1e93ab] font-bold border-t-2 border-[#1e93ab] w-full">
+                <i class="fas fa-home text-lg"></i>
+                <span class="text-xs mt-1">Home</span>
+            </a>
+            <a href="products.html" class="flex flex-col items-center justify-center text-center p-2 text-gray-500 w-full hover:text-[#1e93ab] transition-colors duration-300">
+                <i class="fas fa-th-large text-lg"></i>
+                <span class="text-xs mt-1">Products</span>
+            </a>
+            <a href="#" class="flex flex-col items-center justify-center text-center p-2 text-gray-500 w-full hover:text-[#1e93ab] transition-colors duration-300">
+                <i class="fas fa-user-friends text-lg"></i>
+                <span class="text-xs mt-1">About Us</span>
+            </a>
+            <a href="#" class="flex flex-col items-center justify-center text-center p-2 text-gray-500 w-full hover:text-[#1e93ab] transition-colors duration-300">
+                <i class="fas fa-envelope text-lg"></i>
+                <span class="text-xs mt-1">Contact</span>
+            </a>
+        </div>
+    </nav>
 
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         // JavaScript for mobile menu toggle
@@ -525,6 +504,72 @@
             aiError.classList.remove('hidden');
         }
 
+        // --- Three.js Realistic Stone ---
+        const container = document.getElementById('stone-container');
+        if (container && typeof THREE !== 'undefined') {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+
+            const geometry = new THREE.IcosahedronGeometry(2, 1);
+            
+            const material = new THREE.MeshStandardMaterial({
+                color: 0xeaeaea, 
+                roughness: 0.7,
+                metalness: 0.2,
+                flatShading: true,
+            });
+
+            const stone = new THREE.Mesh(geometry, material);
+            scene.add(stone);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+
+            const pointLight = new THREE.PointLight(0xffffff, 0.8);
+            pointLight.position.set(5, 10, 5);
+            scene.add(pointLight);
+            
+            const pointLight2 = new THREE.PointLight(0xffffff, 0.3);
+            pointLight2.position.set(-5, -5, -5);
+            scene.add(pointLight2);
+
+            camera.position.z = 4.5;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                stone.rotation.x += 0.001;
+                stone.rotation.y += 0.002;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                if (container.clientWidth > 0 && container.clientHeight > 0) {
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(container.clientWidth, container.clientHeight);
+                }
+            });
+        }
+        
+        // --- Disappearing Hero on Scroll ---
+        window.addEventListener('scroll', () => {
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+                const scrollPosition = window.scrollY;
+                const heroHeight = heroSection.offsetHeight;
+
+                // Adjust the fade speed. A smaller divisor means it fades faster.
+                const fadeSpeed = 1.5; 
+                let opacity = 1 - (scrollPosition / (heroHeight / fadeSpeed));
+                opacity = Math.max(0, opacity);
+
+                heroSection.style.opacity = opacity;
+            }
+        });
     </script>
 </body>
 </html>

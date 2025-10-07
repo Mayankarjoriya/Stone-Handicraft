@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Portfolio - StoneCraft</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* Custom styles from homepage */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+        }
+        .font-lora {
+            font-family: 'Lora', serif;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #desktop-nav {
+            transform: translateY(-150%);
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        #desktop-nav.loaded {
+            transform: translateY(0);
+        }
+        .page-header {
+            background-color: #111; /* Jet Black Background */
+            position: relative;
+            overflow: hidden;
+        }
+        /* Cursor Light Effect */
+        .page-header::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            top: var(--y, -250px);
+            left: var(--x, -250px);
+            transform: translate(-50%, -50%);
+            transition: opacity 0.5s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .page-header:hover::before {
+            opacity: 1;
+        }
+        .portfolio-card {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-[#f3f2ec] pb-16 md:pb-0">
+
+    <!-- Modern Dock Navigation (Desktop)  -->
+    <div class="hidden md:flex justify-center fixed top-4 w-full z-50">
+        <nav id="desktop-nav" class="flex items-center space-x-4 bg-white/70 backdrop-blur-md shadow-lg rounded-full px-6 py-2">
+            <a href="index.html" class="text-xl font-bold font-lora text-[#1e93ab] px-4">StoneCraft</a>
+            <div class="h-6 w-px bg-gray-300"></div>
+            <div class="flex items-center space-x-1">
+                <a href="index.html" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Home</a>
+                <a href="products.html" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Products</a>
+                <a href="about.html" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">About Us</a>
+                <a href="portfolio.html" class="font-semibold text-[#1e93ab] bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Portfolio</a>
+                <a href="contact.html" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Contact</a>
+            </div>
+        </nav>
+    </div>
+    <!-- Header (Mobile) -->
+    <header id="mobile-header" class="md:hidden bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold font-lora text-[#1e93ab]">StoneCraft</a>
+            <button id="mobile-menu-button" class="md:hidden">
+                <i class="fas fa-bars text-2xl text-gray-700"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+            <a href="index.html" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Home</a>
+            <a href="products.html" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Products</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:text-[#1e93ab]">About Us</a>
+            <a href="portfolio.html" class="block py-2 font-semibold text-[#1e93ab]">Portfolio</a>
+            <a href="contact.html" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Contact</a>
+            <a href="#" class="block mt-2 bg-[#e62727] text-white py-2 px-5 rounded-md text-center hover:bg-[#c41e1e]">Request a Quote</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <section class="page-header h-auto py-16 md:py-20 flex items-center justify-center text-white text-center">
+            <div class="reveal container mx-auto px-6 z-10 relative">
+                <h1 class="text-4xl md:text-6xl font-bold font-lora">Our Portfolio</h1>
+                <p class="text-lg md:text-xl mt-4 max-w-3xl mx-auto">A Showcase of Our Finest Work</p>
+            </div>
+        </section>
+
+        <!-- Portfolio Gallery Section -->
+        <section class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="text-3xl md:text-4xl font-bold font-lora text-gray-800">Project Gallery</h2>
+                    <p class="text-gray-600 mt-2 max-w-2xl mx-auto">Explore a selection of projects that showcase our craftsmanship and attention to detail.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Portfolio Item 1 -->
+                    <div class="portfolio-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal">
+                        <div class="overflow-hidden">
+                            <img src="https://placehold.co/600x400/a87c5b/fff?text=Luxury+Villa" alt="Luxury Villa Fountain" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Luxury Villa Fountain</h3>
+                            <p class="text-gray-600 mb-4">A grand, multi-tiered sandstone fountain for a private residence in Udaipur.</p>
+                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Project Details <i class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 2 -->
+                    <div class="portfolio-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal">
+                        <div class="overflow-hidden">
+                            <img src="https://placehold.co/600x400/967d69/fff?text=Hotel+Lobby" alt="Hotel Lobby Sculpture" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Hotel Lobby Sculpture</h3>
+                            <p class="text-gray-600 mb-4">An abstract marble sculpture commissioned for the lobby of a 5-star hotel in Mumbai.</p>
+                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Project Details <i class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 3 -->
+                    <div class="portfolio-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal">
+                        <div class="overflow-hidden">
+                            <img src="https://placehold.co/600x400/8d8d8d/fff?text=Heritage+Restoration" alt="Heritage Building Jali" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Heritage Restoration</h3>
+                            <p class="text-gray-600 mb-4">Painstaking restoration of intricate jali work for a heritage property in Jodhpur.</p>
+                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Project Details <i class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 4 -->
+                    <div class="portfolio-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal">
+                        <div class="overflow-hidden">
+                            <img src="https://placehold.co/600x400/bca490/fff?text=Public+Park" alt="Public Park Benches" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Public Park Benches</h3>
+                            <p class="text-gray-600 mb-4">A series of durable and elegant stone benches for a new public park in Delhi.</p>
+                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Project Details <i class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 5 -->
+                    <div class="portfolio-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal">
+                        <div class="overflow-hidden">
+                            <img src="https://placehold.co/600x400/7a7a7a/fff?text=Temple+Carvings" alt="Temple Wall Carvings" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Temple Wall Carvings</h3>
+                            <p class="text-gray-600 mb-4">Ornate wall panels depicting mythological scenes for a temple in Gujarat.</p>
+                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Project Details <i class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 6 -->
+                    <div class="portfolio-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal">
+                        <div class="overflow-hidden">
+                            <img src="https://placehold.co/600x400/c0a080/fff?text=Garden+Gazebo" alt="Garden Gazebo" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Garden Gazebo</h3>
+                            <p class="text-gray-600 mb-4">A magnificent hand-carved gazebo that serves as the centerpiece of a landscaped garden.</p>
+                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Project Details <i class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#1e93ab] text-white">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 reveal">
+                <div>
+                    <h3 class="text-xl font-bold font-lora mb-4">StoneCraft</h3>
+                    <p class="text-gray-200">Honoring the art of stone carving, we deliver timeless elegance handcrafted by master artisans in Jaipur.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-200 hover:text-white">Home</a></li>
+                        <li><a href="products.html" class="text-gray-200 hover:text-white">Products</a></li>
+                        <li><a href="about.html" class="text-gray-200 hover:text-white">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-200 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-gray-200">
+                        <li class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-3"></i>Sitapura Industrial Area, Jaipur, Rajasthan, India</li>
+                        <li class="flex items-center"><i class="fas fa-phone-alt mr-3"></i>+91 98765 43210</li>
+                        <li class="flex items-center"><i class="fas fa-envelope mr-3"></i>info@stonecraft.com</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-200 hover:text-white text-2xl"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-200 hover:text-white text-2xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-200 hover:text-white text-2xl"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-gray-600 pt-6 text-center text-gray-300 text-sm">
+                <p>&copy; 2025 StoneCraft. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.1)] z-50">
+        <div class="flex justify-around">
+            <a href="index.html" class="flex flex-col items-center justify-center text-center p-2 text-gray-500 w-full hover:text-[#1e93ab] transition-colors duration-300">
+                <i class="fas fa-home text-lg"></i>
+                <span class="text-xs mt-1">Home</span>
+            </a>
+            <a href="products.html" class="flex flex-col items-center justify-center text-center p-2 text-gray-500 w-full hover:text-[#1e93ab] transition-colors duration-300">
+                <i class="fas fa-th-large text-lg"></i>
+                <span class="text-xs mt-1">Products</span>
+            </a>
+            <a href="about.html" class="flex flex-col items-center justify-center text-center p-2 text-gray-500 w-full hover:text-[#1e93ab] transition-colors duration-300">
+                <i class="fas fa-user-friends text-lg"></i>
+                <span class="text-xs mt-1">About Us</span>
+            </a>
+            <a href="portfolio.html" class="flex flex-col items-center justify-center text-center p-2 text-[#1e93ab] font-bold border-t-2 border-[#1e93ab] w-full">
+                <i class="fas fa-briefcase text-lg"></i>
+                <span class="text-xs mt-1">Portfolio</span>
+            </a>
+            <a href="contact.html" class="flex flex-col items-center justify-center text-center p-2 text-gray-500 w-full hover:text-[#1e93ab] transition-colors duration-300">
+                <i class="fas fa-envelope text-lg"></i>
+                <span class="text-xs mt-1">Contact</span>
+            </a>
+        </div>
+    </nav>
+
+
+    <script>
+        // JS for mobile menu and animations
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        const mobileHeader = document.getElementById('mobile-header');
+        if (mobileHeader) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    mobileHeader.classList.remove('bg-white/80');
+                    mobileHeader.classList.add('bg-white');
+                } else {
+                    mobileHeader.classList.add('bg-white/80');
+                    mobileHeader.classList.remove('bg-white');
+                }
+            });
+        }
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        revealElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        const desktopNav = document.getElementById('desktop-nav');
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                desktopNav.classList.add('loaded');
+            }, 500);
+        });
+
+        // Cursor light effect for hero section
+        const pageHeader = document.querySelector('.page-header');
+        if (pageHeader) {
+            pageHeader.addEventListener('mousemove', e => {
+                const rect = pageHeader.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                pageHeader.style.setProperty('--x', `${x}px`);
+                pageHeader.style.setProperty('--y', `${y}px`);
+            });
+        }
+    </script>
+</body>
+</html>

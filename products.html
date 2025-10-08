@@ -5,74 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Products - StoneCraft</title>
     
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Browse our extensive collection of handcrafted stone products, including fountains, sculptures, marble jali, benches, and custom designs.">
+    <meta name="keywords" content="stone products, handicraft catalog, marble fountains, stone sculptures, garden ornaments, stone benches">
+
+    <!-- Custom Favicon --><link rel="icon" href="data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231e93ab' d='M50 10 C 20 20, 20 80, 50 90 S 80 80, 80 50 S 70 20, 50 10 Z'/%3E%3C/svg%3E">
+
+    <!-- Tailwind CSS CDN --><script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts (Inter) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Font Awesome for Icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* Custom styles from homepage */
+        /* Custom styles */
         body {
             font-family: 'Inter', sans-serif;
             color: #333;
+            overflow-x: hidden;
+            padding-bottom: 64px;
+        }
+        body.menu-open, body.filter-open {
+            overflow: hidden;
         }
         .font-lora {
             font-family: 'Lora', serif;
+        }
+        .font-poppins {
+            font-family: 'Poppins', sans-serif;
         }
         .reveal {
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-            will-change: opacity, transform;
         }
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
         #desktop-nav {
+            opacity: 0;
             transform: translateY(-150%);
-            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: opacity 0.8s ease-out 0.5s, transform 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.5s;
         }
         #desktop-nav.loaded {
+            opacity: 1;
             transform: translateY(0);
         }
+        
+        #mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        #mobile-menu.open {
+            max-height: 300px;
+        }
         .page-header {
-            background-color: #111; /* Jet Black Background */
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('quino-al-uVec7aTx_iM-unsplash.jpg');
+            background-size: cover;
+            background-position: center;
             position: relative;
             overflow: hidden;
         }
-        /* Cursor Light Effect */
-        .page-header::before {
-            content: '';
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
-            border-radius: 50%;
-            top: var(--y, -250px);
-            left: var(--x, -250px);
-            transform: translate(-50%, -50%);
-            transition: opacity 0.5s ease;
-            opacity: 0;
-            pointer-events: none;
+        .product-card {
+            transition: opacity 0.4s ease, transform 0.4s ease, height 0.4s ease, padding 0.4s ease, margin 0.4s ease;
+            will-change: opacity, transform;
         }
-        .page-header:hover::before {
+        .product-card.hidden {
+            opacity: 0 !important;
+            transform: scale(0.9) !important;
+            height: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important;
+            pointer-events: none !important;
+            display: none !important; /* Force hide */
+        }
+
+        /* Filter Modal */
+        #filter-modal {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #filter-modal-content {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        #filter-modal.open {
             opacity: 1;
         }
-        .product-card {
-            transition: all 0.3s ease-in-out;
+        #filter-modal.open #filter-modal-content {
+            transform: translateX(0);
         }
     </style>
 </head>
-<body class="bg-[#f3f2ec] pb-16 md:pb-0">
+<body class="bg-[#EAE7DC]">
 
-    <!-- Modern Dock Navigation (Desktop)  -->
     <div class="hidden md:flex justify-center fixed top-4 w-full z-50">
         <nav id="desktop-nav" class="flex items-center space-x-4 bg-white/70 backdrop-blur-md shadow-lg rounded-full px-6 py-2">
             <a href="index.html" class="text-xl font-bold font-lora text-[#1e93ab] px-4">StoneCraft</a>
@@ -80,75 +110,52 @@
             <div class="flex items-center space-x-1">
                 <a href="index.html" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Home</a>
                 <a href="products.html" class="font-semibold text-[#1e93ab] bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Products</a>
-                <a href="#" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">About Us</a>
-                <a href="#" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Portfolio</a>
-                <a href="#" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Contact</a>
+                <a href="about.html" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">About Us</a>
+                <a href="portfolio.html" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Portfolio</a>
+                <a href="contact.html" class="text-gray-700 hover:bg-[#dcdcdc]/60 rounded-full px-4 py-2 transition-all duration-300">Contact</a>
             </div>
+             <a href="#" class="bg-[#e62727] text-white py-2 px-5 rounded-full hover:bg-[#c41e1e] transition-colors duration-300 ml-2">Request a Quote</a>
         </nav>
     </div>
-    <!-- Header (Mobile) -->
     <header id="mobile-header" class="md:hidden bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold font-lora text-[#1e93ab]">StoneCraft</a>
-            <button id="mobile-menu-button" class="md:hidden">
+            <button id="mobile-menu-button" class="md:hidden" aria-label="Toggle mobile menu">
                 <i class="fas fa-bars text-2xl text-gray-700"></i>
             </button>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
-            <a href="index.html" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Home</a>
-            <a href="products.html" class="block py-2 font-semibold text-[#1e93ab]">Products</a>
-            <a href="#" class="block py-2 text-gray-600 hover:text-[#1e93ab]">About Us</a>
-            <a href="#" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Portfolio</a>
-            <a href="#" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Contact</a>
-            <a href="#" class="block mt-2 bg-[#e62727] text-white py-2 px-5 rounded-md text-center hover:bg-[#c41e1e]">Request a Quote</a>
+        <div id="mobile-menu">
+            <div class="bg-white px-6 pb-4">
+                <a href="index.html" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Home</a>
+                <a href="products.html" class="block py-2 font-semibold text-[#1e93ab]">Products</a>
+                <a href="about.html" class="block py-2 text-gray-600 hover:text-[#1e93ab]">About Us</a>
+                <a href="portfolio.html" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Portfolio</a>
+                <a href="contact.html" class="block py-2 text-gray-600 hover:text-[#1e93ab]">Contact</a>
+                <a href="#" class="block mt-2 bg-[#e62727] text-white py-2 px-5 rounded-md text-center hover:bg-[#c41e1e]">Request a Quote</a>
+            </div>
         </div>
     </header>
 
     <main>
-        <!-- Page Header with Our Range -->
         <section class="page-header h-auto py-16 md:py-20 flex items-center justify-center text-white text-center">
             <div class="reveal container mx-auto px-6 z-10 relative">
-                <h1 class="text-4xl md:text-6xl font-bold font-lora">Our Products</h1>
+                <h1 class="text-4xl md:text-6xl font-bold font-poppins">Our Products</h1>
                 <p class="text-lg md:text-xl mt-4 max-w-3xl mx-auto">Explore our exquisite collection of handcrafted stone artifacts.</p>
-
-                <!-- "Our Range" Section -->
-                <div class="mt-12">
-                    <p class="text-md md:text-lg">We have characterized our extensive product range into 8 major categories which are:</p>
-                    <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 max-w-6xl mx-auto text-sm md:text-base">
-                        <a href="#browse-categories" class="bg-white/10 backdrop-blur-sm rounded-lg p-3 font-semibold hover:bg-white/20 transition-colors duration-300">Stone Bench</a>
-                        <a href="#browse-categories" class="bg-white/10 backdrop-blur-sm rounded-lg p-3 font-semibold hover:bg-white/20 transition-colors duration-300">Stone Fountain</a>
-                        <a href="#browse-categories" class="bg-white/10 backdrop-blur-sm rounded-lg p-3 font-semibold hover:bg-white/20 transition-colors duration-300">Stone Gazebo</a>
-                        <a href="#browse-categories" class="bg-white/10 backdrop-blur-sm rounded-lg p-3 font-semibold hover:bg-white/20 transition-colors duration-300">Stone Columns</a>
-                        <a href="#browse-categories" class="bg-white/10 backdrop-blur-sm rounded-lg p-3 font-semibold hover:bg-white/20 transition-colors duration-300">Stone Planter</a>
-                        <a href="#browse-categories" class="bg-white/10 backdrop-blur-sm rounded-lg p-3 font-semibold hover:bg-white/20 transition-colors duration-300">Stone Lamp Posts</a>
-                        <a href="#browse-categories" class="bg-white/10 backdrop-blur-sm rounded-lg p-3 font-semibold hover:bg-white/20 transition-colors duration-300">Stone Animal Figure</a>
-                        <a href="#browse-categories" class="bg-white/10 backdrop-blur-sm rounded-lg p-3 font-semibold hover:bg-white/20 transition-colors duration-300">Stone Garden Ornament</a>
-                    </div>
-                </div>
             </div>
         </section>
 
-        <!-- Product Categories Section -->
         <section id="browse-categories" class="py-16 md:py-24 bg-white">
             <div class="container mx-auto px-6">
                  <div class="text-center mb-12 reveal">
-                    <h2 class="text-3xl md:text-4xl font-bold font-lora text-gray-800">Browse Categories</h2>
-                    <p class="text-gray-600 mt-2 max-w-2xl mx-auto">Click on any category to explore our detailed catalog of designs.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold font-lora text-gray-800">Browse Our Collection</h2>
+                    <p class="text-gray-600 mt-2 max-w-2xl mx-auto">Filter by category or search to find the perfect piece for your space.</p>
                 </div>
 
-                <!-- Filter and Search Toolbar -->
                 <div class="container mx-auto px-6 mb-12 reveal">
-                    <div class="flex flex-col md:flex-row justify-between items-center gap-6 bg-[#f3f2ec] p-4 rounded-lg shadow-sm">
-                        <!-- Filter Buttons -->
-                        <div id="filter-buttons" class="flex flex-wrap justify-center gap-2">
-                            <button class="filter-btn active bg-[#1e93ab] text-white py-2 px-4 rounded-md transition-all duration-300" data-filter="all">All</button>
-                            <button class="filter-btn bg-white text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200 transition-all duration-300" data-filter="fountains">Fountains</button>
-                            <button class="filter-btn bg-white text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200 transition-all duration-300" data-filter="sculptures">Sculptures</button>
-                            <button class="filter-btn bg-white text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200 transition-all duration-300" data-filter="jali">Jali</button>
-                            <button class="filter-btn bg-white text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200 transition-all duration-300" data-filter="benches">Benches</button>
-                        </div>
-                        <!-- Search Input -->
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6 bg-[#EAE7DC] p-4 rounded-lg shadow-sm">
+                        <button id="filter-btn" class="bg-white text-gray-700 py-2 px-6 rounded-md hover:bg-gray-200 transition-all duration-300 font-semibold flex items-center gap-2">
+                             <i class="fas fa-filter"></i> Filters
+                        </button>
                         <div class="relative w-full md:w-auto">
                             <input type="text" id="search-input" placeholder="Search products..." class="w-full md:w-64 p-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e93ab]">
                             <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
@@ -156,170 +163,34 @@
                     </div>
                 </div>
 
-                <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Category Card 1 -->
-                    <div class="product-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal" data-category="fountains">
-                        <div class="overflow-hidden">
-                            <img src="https://placehold.co/600x400/a87c5b/fff?text=Fountains" alt="Stone Fountains" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Stone Fountains</h3>
-                            <p class="text-gray-600 mb-4">Create a tranquil oasis with our beautifully sculpted indoor and outdoor fountains.</p>
-                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Designs <i class="fas fa-arrow-right ml-1"></i></a>
-                        </div>
-                    </div>
-                    <!-- Category Card 2 -->
-                    <div class="product-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal" data-category="sculptures">
-                        <div class="overflow-hidden">
-                            <img src="https://placehold.co/600x400/967d69/fff?text=Sculptures" alt="Garden Sculptures" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Garden Sculptures</h3>
-                            <p class="text-gray-600 mb-4">Enhance your garden's beauty with our unique, handcrafted statues and abstract forms.</p>
-                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Designs <i class="fas fa-arrow-right ml-1"></i></a>
-                        </div>
-                    </div>
-                    <!-- Category Card 3 -->
-                    <div class="product-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal" data-category="jali">
-                        <div class="overflow-hidden">
-                            <img src="https://placehold.co/600x400/8d8d8d/fff?text=Jali" alt="Marble Jali" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Marble Jali & Grills</h3>
-                            <p class="text-gray-600 mb-4">Intricate and elegant marble lattice work for a touch of royal heritage and privacy.</p>
-                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Designs <i class="fas fa-arrow-right ml-1"></i></a>
-                        </div>
-                    </div>
-                    <!-- Category Card 4 -->
-                    <div class="product-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal" data-category="planters">
-                        <div class="overflow-hidden">
-                            <img src="https://placehold.co/600x400/bca490/fff?text=Planters" alt="Stone Planters" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Stone Planters</h3>
-                            <p class="text-gray-600 mb-4">Durable and stylish stone planters and troughs for your indoor and outdoor plants.</p>
-                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Designs <i class="fas fa-arrow-right ml-1"></i></a>
-                        </div>
-                    </div>
-                    <!-- Category Card 5 -->
-                     <div class="product-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal" data-category="panels">
-                        <div class="overflow-hidden">
-                            <img src="https://placehold.co/600x400/7a7a7a/fff?text=Wall+Panels" alt="Wall Panels" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Wall Panels & Murals</h3>
-                            <p class="text-gray-600 mb-4">Transform your walls into art with our stunning carved stone panels and murals.</p>
-                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Designs <i class="fas fa-arrow-right ml-1"></i></a>
-                        </div>
-                    </div>
-                    <!-- Category Card 6 -->
-                     <div class="product-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal" data-category="benches">
-                        <div class="overflow-hidden">
-                            <img src="https://placehold.co/600x400/c0a080/fff?text=Benches" alt="Garden Benches" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Garden Benches</h3>
-                            <p class="text-gray-600 mb-4">Elegant and weather-resistant stone benches for parks, gardens, and patios.</p>
-                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Designs <i class="fas fa-arrow-right ml-1"></i></a>
-                        </div>
-                    </div>
-                    <!-- Category Card 7 -->
-                     <div class="product-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal" data-category="gazebos">
-                        <div class="overflow-hidden">
-                            <img src="https://placehold.co/600x400/a08c7d/fff?text=Gazebo" alt="Stone Gazebo" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Stone Gazebos</h3>
-                            <p class="text-gray-600 mb-4">A magnificent centerpiece for large gardens, parks, and luxury properties.</p>
-                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Designs <i class="fas fa-arrow-right ml-1"></i></a>
-                        </div>
-                    </div>
-                    <!-- Category Card 8 -->
-                     <div class="product-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal" data-category="lamps">
-                        <div class="overflow-hidden">
-                            <img src="https://placehold.co/600x400/b3b3b3/fff?text=Lamp+Posts" alt="Lamp Posts" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Lamp Posts</h3>
-                            <p class="text-gray-600 mb-4">Light up your pathways and gardens with our ornately carved stone lamp posts.</p>
-                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">View Designs <i class="fas fa-arrow-right ml-1"></i></a>
-                        </div>
-                    </div>
-                     <!-- Category Card 9 -->
-                     <div class="product-card bg-[#f3f2ec] rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 reveal" data-category="custom">
-                        <div class="overflow-hidden">
-                            <img src="https://placehold.co/600x400/d1c1b1/fff?text=Custom+Projects" alt="Custom Projects" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold font-lora mb-2 text-gray-800">Custom Projects</h3>
-                            <p class="text-gray-600 mb-4">Have a unique idea? We specialize in bringing custom stone designs to life.</p>
-                            <a href="#" class="font-semibold text-[#1e93ab] group-hover:text-[#156a7c]">Discuss Your Project <i class="fas fa-arrow-right ml-1"></i></a>
-                        </div>
-                    </div>
+                <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
+                    <!-- Products will be dynamically added here -->
                 </div>
             </div>
         </section>
         
-        <!-- Get in Touch Section -->
-        <section class="py-16 md:py-24 bg-[#f3f2ec]">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12 reveal">
-                    <h2 class="text-3xl md:text-4xl font-bold font-lora text-gray-800">Get In Touch</h2>
-                    <p class="text-gray-600 mt-2 max-w-2xl mx-auto">Have a question or a custom project in mind? We'd love to hear from you.</p>
-                </div>
-                <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg reveal">
-                    <form action="#" method="POST">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <label for="name" class="block text-gray-700 font-semibold mb-2">Full Name</label>
-                                <input type="text" id="name" name="name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e93ab]" required>
-                            </div>
-                            <div>
-                                <label for="email" class="block text-gray-700 font-semibold mb-2">Email Address</label>
-                                <input type="email" id="email" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e93ab]" required>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                             <label for="phone" class="block text-gray-700 font-semibold mb-2">Phone Number (Optional)</label>
-                             <input type="tel" id="phone" name="phone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e93ab]">
-                        </div>
-                        <div class="mb-6">
-                            <label for="message" class="block text-gray-700 font-semibold mb-2">Your Message</label>
-                            <textarea id="message" name="message" rows="5" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e93ab]" placeholder="Describe your requirement in detail..." required></textarea>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="bg-[#e62727] text-white py-3 px-8 rounded-md hover:bg-[#c41e1e] text-lg font-semibold transition duration-300 transform hover:scale-105">
-                                Send Message
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-
     </main>
 
-    <!-- Footer -->
     <footer class="bg-[#1e93ab] text-white">
         <div class="container mx-auto px-6 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 reveal">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <h3 class="text-xl font-bold font-lora mb-4">StoneCraft</h3>
-                    <p class="text-gray-200">Honoring the art of stone carving, we deliver timeless elegance handcrafted by master artisans in Jaipur.</p>
+                    <p class="text-gray-200">Honoring the art of stone carving.</p>
                 </div>
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
                         <li><a href="index.html" class="text-gray-200 hover:text-white">Home</a></li>
                         <li><a href="products.html" class="text-gray-200 hover:text-white">Products</a></li>
-                        <li><a href="#" class="text-gray-200 hover:text-white">About Us</a></li>
-                        <li><a href="#" class="text-gray-200 hover:text-white">Contact</a></li>
+                        <li><a href="about.html" class="text-gray-200 hover:text-white">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-200 hover:text-white">Contact</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
                     <ul class="space-y-2 text-gray-200">
-                        <li class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-3"></i>Sitapura Industrial Area, Jaipur, Rajasthan, India</li>
+                        <li class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-3"></i>Sitapura Industrial Area, Jaipur</li>
                         <li class="flex items-center"><i class="fas fa-phone-alt mr-3"></i>+91 98765 43210</li>
                         <li class="flex items-center"><i class="fas fa-envelope mr-3"></i>info@stonecraft.com</li>
                     </ul>
@@ -334,12 +205,60 @@
                 </div>
             </div>
             <div class="mt-10 border-t border-gray-600 pt-6 text-center text-gray-300 text-sm">
-                <p>&copy; 2025 StoneCraft. All Rights Reserved.</p>
+                <p>&copy; 2024 StoneCraft. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Mobile Bottom Navigation -->
+    <div id="filter-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end opacity-0">
+        <div id="filter-modal-content" class="bg-white w-full max-w-sm h-full shadow-lg p-6 transform translate-x-full overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold font-lora">Filters</h2>
+                <button id="close-filter-btn" class="text-2xl text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            
+            <div class="space-y-6 pb-24">
+                <div>
+                    <h3 class="font-semibold mb-3 border-b pb-2">Category</h3>
+                    <div class="space-y-2" id="category-filters">
+                        <label class="flex items-center"><input type="radio" name="category" value="all" class="mr-2" checked> All</label>
+                        <label class="flex items-center"><input type="radio" name="category" value="fountains" class="mr-2"> Fountains</label>
+                        <label class="flex items-center"><input type="radio" name="category" value="sculptures" class="mr-2"> Sculptures</label>
+                        <label class="flex items-center"><input type="radio" name="category" value="jali" class="mr-2"> Jali</label>
+                        <label class="flex items-center"><input type="radio" name="category" value="benches" class="mr-2"> Benches</label>
+                        <label class="flex items-center"><input type="radio" name="category" value="planters" class="mr-2"> Planters</label>
+                        <label class="flex items-center"><input type="radio" name="category" value="lamps" class="mr-2"> Lamps</label>
+                        <label class="flex items-center"><input type="radio" name="category" value="gazebos" class="mr-2"> Gazebos</label>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-semibold mb-3 border-b pb-2">Price</h3>
+                    <div class="space-y-2" id="price-filters">
+                        <label class="flex items-center"><input type="radio" name="price" value="all" class="mr-2" checked> Any Price</label>
+                        <label class="flex items-center"><input type="radio" name="price" value="0-10000" class="mr-2"> Under ₹10,000</label>
+                        <label class="flex items-center"><input type="radio" name="price" value="10000-50000" class="mr-2"> ₹10,000 - ₹50,000</label>
+                        <label class="flex items-center"><input type="radio" name="price" value="50000-9999999" class="mr-2"> Above ₹50,000</label>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-semibold mb-3 border-b pb-2">Rating</h3>
+                    <div class="space-y-2" id="rating-filters">
+                        <label class="flex items-center"><input type="radio" name="rating" value="all" class="mr-2" checked> Any Rating</label>
+                        <label class="flex items-center"><input type="radio" name="rating" value="4" class="mr-2"> 4★ & above</label>
+                        <label class="flex items-center"><input type="radio" name="rating" value="3" class="mr-2"> 3★ & above</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute bottom-0 left-0 right-0 p-4 bg-white border-t flex gap-4">
+                <button id="clear-filters-btn" class="w-1/2 py-3 bg-gray-200 text-gray-700 rounded-md font-semibold">Clear All</button>
+                <button id="apply-filters-btn" class="w-1/2 py-3 bg-[#1e93ab] text-white rounded-md font-semibold">Apply</button>
+            </div>
+        </div>
+    </div>
+    
     <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.1)] z-50">
         <div class="flex justify-around">
             <a href="index.html" class="flex flex-col items-center justify-center text-center p-2 text-gray-500 w-full hover:text-[#1e93ab] transition-colors duration-300">
@@ -350,11 +269,11 @@
                 <i class="fas fa-th-large text-lg"></i>
                 <span class="text-xs mt-1">Products</span>
             </a>
-            <a href="#" class="flex flex-col items-center justify-center text-center p-2 text-gray-500 w-full hover:text-[#1e93ab] transition-colors duration-300">
+            <a href="about.html" class="flex flex-col items-center justify-center text-center p-2 text-gray-500 w-full hover:text-[#1e93ab] transition-colors duration-300">
                 <i class="fas fa-user-friends text-lg"></i>
                 <span class="text-xs mt-1">About Us</span>
             </a>
-            <a href="#" class="flex flex-col items-center justify-center text-center p-2 text-gray-500 w-full hover:text-[#1e93ab] transition-colors duration-300">
+            <a href="contact.html" class="flex flex-col items-center justify-center text-center p-2 text-gray-500 w-full hover:text-[#1e93ab] transition-colors duration-300">
                 <i class="fas fa-envelope text-lg"></i>
                 <span class="text-xs mt-1">Contact</span>
             </a>
@@ -363,107 +282,180 @@
 
 
     <script>
-        // JS for mobile menu and animations (reused from index.html)
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        const mobileHeader = document.getElementById('mobile-header');
-        if (mobileHeader) {
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    mobileHeader.classList.remove('bg-white/80');
-                    mobileHeader.classList.add('bg-white');
-                } else {
-                    mobileHeader.classList.add('bg-white/80');
-                    mobileHeader.classList.remove('bg-white');
-                }
-            });
-        }
-
-        const revealElements = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
-
-        revealElements.forEach(element => {
-            observer.observe(element);
-        });
-
-        const desktopNav = document.getElementById('desktop-nav');
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                desktopNav.classList.add('loaded');
-            }, 500);
-        });
-
-        // Cursor light effect for hero section
-        const pageHeader = document.querySelector('.page-header');
-        if (pageHeader) {
-            pageHeader.addEventListener('mousemove', e => {
-                const rect = pageHeader.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                pageHeader.style.setProperty('--x', `${x}px`);
-                pageHeader.style.setProperty('--y', `${y}px`);
-            });
-        }
-
-        // --- Product Filter and Search Logic ---
         document.addEventListener('DOMContentLoaded', () => {
-            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            // --- Sample Product Data ---
+            const products = [
+                { id: 1, name: 'Classic Tiered Fountain', category: 'fountains', price: 45999, oldPrice: 59999, rating: 4.5, reviews: 28, img: 'a87c5b/fff.webp?text=Classic+Fountain' },
+                { id: 2, name: 'Abstract Garden Sculpture', category: 'sculptures', price: 19999, oldPrice: null, rating: 4.0, reviews: 15, img: '967d69/fff.webp?text=Abstract+Sculpture' },
+                { id: 3, name: 'Geometric Marble Jali', category: 'jali', price: null, oldPrice: null, rating: 5.0, reviews: 42, img: '8d8d8d/fff.webp?text=Marble+Jali' },
+                { id: 4, name: 'Royal Sandstone Bench', category: 'benches', price: 25499, oldPrice: 32000, rating: 4.5, reviews: 31, img: 'c0a080/fff.webp?text=Sandstone+Bench' },
+                { id: 5, name: 'Durable Stone Planter', category: 'planters', price: 8999, oldPrice: null, rating: 4.0, reviews: 18, img: 'bca490/fff.webp?text=Stone+Planters' },
+                { id: 6, name: 'Ornate Lamp Post', category: 'lamps', price: 15000, oldPrice: 18500, rating: 5.0, reviews: 22, img: 'b3b3b3/fff.webp?text=Lamp+Posts' },
+                { id: 7, name: 'Magnificent Gazebo', category: 'gazebos', price: 150000, oldPrice: null, rating: 4.8, reviews: 9, img: 'a08c7d/fff.webp?text=Gazebo' },
+                { id: 8, name: 'Hand-Carved Elephant', category: 'sculptures', price: 32000, oldPrice: 40000, rating: 4.9, reviews: 35, img: '795548/fff.webp?text=Animal+Statue' },
+                { id: 9, name: 'Modern Wall Fountain', category: 'fountains', price: 22500, oldPrice: null, rating: 4.2, reviews: 12, img: 'a1887f/fff.webp?text=Wall+Fountain' },
+                { id: 10, name: 'Curved Park Bench', category: 'benches', price: 35000, oldPrice: null, rating: 4.3, reviews: 25, img: 'bca490/fff.webp?text=Curved+Bench' },
+                { id: 11, name: 'Floral Carved Jali Panel', category: 'jali', price: null, oldPrice: null, rating: 5.0, reviews: 50, img: '9e9e9e/fff.webp?text=Floral+Jali' },
+                { id: 12, name: 'Set of 3 Small Planters', category: 'planters', price: 4999, oldPrice: 6500, rating: 4.1, reviews: 29, img: 'd7ccc8/fff.webp?text=Small+Planters' },
+                { id: 13, name: 'Meditating Buddha Statue', category: 'sculptures', price: 28000, oldPrice: null, rating: 4.9, reviews: 60, img: 'a3a3a3/fff.webp?text=Buddha+Statue' },
+                { id: 14, name: 'Sphere Water Feature', category: 'fountains', price: 38500, oldPrice: 45000, rating: 4.6, reviews: 19, img: '616161/fff.webp?text=Sphere+Fountain' },
+                { id: 15, name: 'Traditional Stone Lamp', category: 'lamps', price: 11500, oldPrice: null, rating: 4.7, reviews: 24, img: '8d6e63/fff.webp?text=Stone+Lamp' }
+            ];
+
+            const productGrid = document.getElementById('product-grid');
+            
+            const renderProducts = () => {
+                productGrid.innerHTML = '';
+                products.forEach(product => {
+                    const priceHTML = product.price 
+                        ? `<div class="flex items-baseline gap-2">
+                                <p class="text-lg font-bold text-gray-900">₹${product.price.toLocaleString('en-IN')}</p>
+                                ${product.oldPrice ? `<p class="text-xs text-gray-500 line-through">₹${product.oldPrice.toLocaleString('en-IN')}</p>` : ''}
+                            </div>`
+                        : `<p class="text-lg font-bold text-gray-900">Price on Request</p>`;
+
+                    const starHTML = Array(5).fill(0).map((_, i) => {
+                        if (product.rating > i + 0.75) return '<i class="fas fa-star"></i>';
+                        if (product.rating > i + 0.25) return '<i class="fas fa-star-half-alt"></i>';
+                        return '<i class="far fa-star"></i>';
+                    }).join('');
+
+                    const cardHTML = `
+                        <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden group transform hover:shadow-2xl transition-all duration-300 reveal" data-category="${product.category}" data-price="${product.price || 9999999}" data-rating="${product.rating}">
+                            <div class="overflow-hidden">
+                                <img loading="lazy" src="https://placehold.co/600x400/${product.img}" alt="${product.name}" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-md font-semibold font-lora text-gray-800 truncate">${product.name}</h3>
+                                <div class="flex items-center my-2">
+                                    <div class="flex text-yellow-400 text-sm">${starHTML}</div>
+                                    <span class="text-xs text-gray-500 ml-2">(${product.reviews})</span>
+                                </div>
+                                ${priceHTML}
+                                <a href="#" class="mt-3 block w-full text-center bg-[#1e93ab] text-white py-2 rounded-md hover:bg-[#156a7c] transition-colors text-sm font-semibold">Quick Inquiry</a>
+                            </div>
+                        </div>
+                    `;
+                    productGrid.innerHTML += cardHTML;
+                });
+            };
+
+            renderProducts();
+
+            const desktopNav = document.getElementById('desktop-nav');
+            window.addEventListener('load', () => {
+                desktopNav.classList.add('loaded');
+                
+                const revealElements = document.querySelectorAll('.reveal');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, {
+                    threshold: 0.1
+                });
+                revealElements.forEach(element => {
+                    observer.observe(element);
+                });
+            });
+            
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', () => {
+                    document.body.classList.toggle('menu-open');
+                    mobileMenu.classList.toggle('open');
+                });
+            }
+            
+            const filterBtn = document.getElementById('filter-btn');
+            const filterModal = document.getElementById('filter-modal');
+            const closeFilterBtn = document.getElementById('close-filter-btn');
+            const applyFiltersBtn = document.getElementById('apply-filters-btn');
+            const clearFiltersBtn = document.getElementById('clear-filters-btn');
+
+            const openFilterModal = () => {
+                filterModal.classList.remove('hidden');
+                document.body.classList.add('filter-open');
+                setTimeout(() => filterModal.classList.add('open'), 10);
+            };
+            const closeFilterModal = () => {
+                filterModal.classList.remove('open');
+                document.body.classList.remove('filter-open');
+                setTimeout(() => filterModal.classList.add('hidden'), 300);
+            };
+
+            if(filterBtn) filterBtn.addEventListener('click', openFilterModal);
+            if(closeFilterBtn) closeFilterBtn.addEventListener('click', closeFilterModal);
+            if(applyFiltersBtn) applyFiltersBtn.addEventListener('click', () => {
+                filterProducts();
+                closeFilterModal();
+            });
+
+            if(clearFiltersBtn) clearFiltersBtn.addEventListener('click', () => {
+                document.querySelectorAll('#filter-modal input[type="radio"]').forEach(radio => {
+                    radio.checked = false;
+                });
+                document.querySelector('input[name="category"][value="all"]').checked = true;
+                document.querySelector('input[name="price"][value="all"]').checked = true;
+                document.querySelector('input[name="rating"][value="all"]').checked = true;
+                filterProducts();
+                closeFilterModal();
+            });
+
             const searchInput = document.getElementById('search-input');
-            const productCards = document.querySelectorAll('.product-card');
+            const productCards = () => document.querySelectorAll('.product-card');
 
             const filterProducts = () => {
                 const searchTerm = searchInput.value.toLowerCase();
-                const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+                const categoryInput = document.querySelector('input[name="category"]:checked');
+                const priceInput = document.querySelector('input[name="price"]:checked');
+                const ratingInput = document.querySelector('input[name="rating"]:checked');
 
-                productCards.forEach(card => {
+                const selectedCategory = categoryInput ? categoryInput.value : 'all';
+                const selectedPrice = priceInput ? priceInput.value.split('-') : ['all'];
+                const selectedRating = ratingInput ? parseFloat(ratingInput.value) : 'all';
+
+                productCards().forEach(card => {
                     const category = card.dataset.category;
+                    const price = parseFloat(card.dataset.price);
+                    const rating = parseFloat(card.dataset.rating);
                     const title = card.querySelector('h3').textContent.toLowerCase();
-
-                    const categoryMatch = activeFilter === 'all' || category === activeFilter;
+                    
+                    const categoryMatch = selectedCategory === 'all' || category === selectedCategory;
+                    const priceMatch = selectedPrice[0] === 'all' || (price >= parseFloat(selectedPrice[0]) && (selectedPrice[1] ? price <= parseFloat(selectedPrice[1]) : true));
+                    const ratingMatch = isNaN(selectedRating) || selectedRating === 'all' || rating >= selectedRating;
                     const searchMatch = title.includes(searchTerm);
-
-                    if (categoryMatch && searchMatch) {
-                        card.style.display = 'block';
+                    
+                    if (categoryMatch && priceMatch && ratingMatch && searchMatch) {
+                        card.classList.remove('hidden');
                     } else {
-                        card.style.display = 'none';
+                        card.classList.add('hidden');
                     }
                 });
             };
 
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const currentActive = document.querySelector('.filter-btn.active');
-                    if (currentActive) {
-                        currentActive.classList.remove('active', 'bg-[#1e93ab]', 'text-white');
-                        currentActive.classList.add('bg-white', 'text-gray-700', 'hover:bg-gray-200');
-                    }
-                    
-                    button.classList.add('active', 'bg-[#1e93ab]', 'text-white');
-                    button.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-200');
+            if(searchInput) searchInput.addEventListener('input', filterProducts);
 
-                    filterProducts();
-                });
-            });
-
-            if(searchInput) {
-                 searchInput.addEventListener('input', filterProducts);
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryFromUrl = urlParams.get('category');
+            if (categoryFromUrl) {
+                const targetRadio = document.querySelector(`input[name="category"][value="${categoryFromUrl}"]`);
+                if (targetRadio) {
+                    setTimeout(() => {
+                         targetRadio.checked = true;
+                         filterProducts();
+                    }, 100);
+                }
+            } else {
+                setTimeout(() => {
+                    filterProducts(); 
+                }, 0);
             }
         });
-
     </script>
 </body>
 </html>
-

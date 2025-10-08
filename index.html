@@ -89,7 +89,7 @@
             transform: translateX(-50%);
             animation: bounce 2s infinite;
             opacity: 0;
-            transition: opacity 0.5s ease-out 1s; /* Fade in after main anim */
+            transition: opacity 0.5s ease-out 0.5s; /* Fade in after main anim */
         }
         .scroll-down-arrow.visible {
             opacity: 1;
@@ -104,6 +104,12 @@
             }
             60% {
                 transform: translateX(-50%) translateY(-10px);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hero-section h1 {
+                line-height: 1.35;
             }
         }
         
@@ -458,4 +464,3 @@
     </script>
 </body>
 </html>
-
